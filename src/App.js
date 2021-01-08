@@ -2,8 +2,16 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { CircularProgress } from '@material-ui/core';
-import { Card, Text } from "@geist-ui/react";
 import "./App.css";
+import {
+  Card,
+  Text,
+  Button,
+  GeistProvider,
+  CssBaseline
+} from "@geist-ui/react";
+import { ArrowUp } from "@geist-ui/react-icons";
+import { Container, ColorCircle, RankArea, LangArea } from "../src/styles";
 
 
 const GET_TODOS = gql`
@@ -37,16 +45,48 @@ const App = () => {
 
   return (
     <>
-    <div>
+    <GeistProvider theme={{ type: "dark" }}>
+    <div style={{ textAlign: "center" }}>
+      <Text h1 style={{ marginTop: "2rem" }}>Ranked GitHub Language Colors</Text>
+      <Text h4 style={{ marginTop: "-0.5rem" }}>Tap the arrow next to your favorite color to upvote a language!</Text>
     {data.languages.map(language => (
       <>
-      <Card width="330px" style={{ backgroundColor: `${language.hex}`}}>
-    <h4>{language.name}</h4>
-    </Card>
-       </>))}
+      <CssBaseline />
+      <div
+        className="App"
+        style={{
+          display: "flex",
+          padding: "0 2rem 0 2rem",
+        }}
+      >
+        <Card
+          style={{
+            display: "flex",
+  
+            margin: "15px",
+            marginRight: "15px",
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
+        >
+          <Container>
+            <LangArea>
+              <ColorCircle style={{ backgroundColor: `${language.hex}` }} />
+              <Text size={17}>{language.name}</Text>
+            </LangArea>
+            <RankArea>
+              <Button icon={<ArrowUp />} auto></Button>
+            </RankArea>
+          </Container>
+        </Card>
+      </div>
+      </>
+      ))}
 
     </div>
+    </GeistProvider>
     </>
+    
     
   );
 }
