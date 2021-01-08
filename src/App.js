@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { CircularProgress } from '@material-ui/core';
-import { Text } from "@geist-ui/react";
+import { Card, Text } from "@geist-ui/react";
 import "./App.css";
 
 
@@ -16,7 +16,7 @@ const GET_TODOS = gql`
   } 
 `
 
-function App() {
+const App = () => {
   const { data, loading, error } = useQuery(GET_TODOS);
 
   if (loading) {
@@ -40,9 +40,11 @@ function App() {
     <div>
     {data.languages.map(language => (
       <>
-      <h1>{language.name}</h1>
-      <div style={{ backgroundColor: `${language.hex}`, width: "5rem" }}>Hello World</div>
+      <Card width="330px" style={{ backgroundColor: `${language.hex}`}}>
+    <h4>{language.name}</h4>
+    </Card>
        </>))}
+
     </div>
     </>
     
